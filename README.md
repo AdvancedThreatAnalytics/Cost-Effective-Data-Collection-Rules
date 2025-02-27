@@ -12,11 +12,12 @@ This template deploys a Data Collection Rule for Fortigate standard logs in Azur
 |-----------|------|-------------|
 | dcrName | string | Name of the Data Collection Rule |
 | location | string | Location for the Data Collection Rule |
-| workspaceResourceId | string | Resource ID of the Log Analytics workspace |
+| workspaceResourceId | string | Full resource ID of the Log Analytics workspace (format: /subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.OperationalInsights/workspaces/{workspace-name}) |
 
 ## Notes
 
 - Make sure to specify a valid Log Analytics workspace Resource ID during deployment
+- The workspace Resource ID can be found in your Log Analytics workspace's Properties page
 - The DCR is configured for Linux systems
 - Includes Syslog collection for both local0 and nopri facilities
 - Implements KQL transformations for traffic and non-traffic logs

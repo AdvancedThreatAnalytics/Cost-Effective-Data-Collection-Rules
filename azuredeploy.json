@@ -19,8 +19,12 @@
         "workspaceResourceId": {
             "type": "string",
             "metadata": {
-                "description": "Resource ID of the Log Analytics workspace"
-            }
+                "description": "Full Resource ID of the Log Analytics workspace. Should start with /subscriptions/..."
+            },
+            "minLength": 1,
+            "defaultValue": "",
+            "validationPattern": "^/subscriptions/[^/]*/resourceGroups/[^/]*/providers/Microsoft.OperationalInsights/workspaces/[^/]*$",
+            "validationMessage": "Please provide a valid Log Analytics workspace resource ID. The value should look like: /subscriptions/<subscription-id>/resourceGroups/<resource-group>/providers/Microsoft.OperationalInsights/workspaces/<workspace-name>"
         }
     },
     "resources": [
