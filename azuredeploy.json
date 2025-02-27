@@ -43,12 +43,18 @@
                 "local7"
             ],
             "defaultValue": "local0"
+        },
+        "deploymentDate": {
+            "type": "string",
+            "defaultValue": "[utcNow('yyyy-MM-dd')]",
+            "metadata": {
+                "description": "Deployment date for the DCR"
+            }
         }
     },
     "variables": {
         "workspaceResourceId": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', parameters('workspaceResourceGroup'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]",
-        "currentDate": "[utcNow('yyyy-MM-dd')]",
-        "dcrName": "[concat('CS-Fortigate-Standard-DCR-', variables('currentDate'))]"
+        "dcrName": "[concat('CS-Fortigate-Standard-DCR-', parameters('deploymentDate'))]"
     },
     "resources": [
         {

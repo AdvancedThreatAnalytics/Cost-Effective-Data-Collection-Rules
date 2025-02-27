@@ -10,6 +10,7 @@ This template deploys a Data Collection Rule for Fortigate standard logs in Azur
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
+| deploymentDate | string | Deployment date for the DCR (auto-generated) |
 | location | string | Location for the Data Collection Rule |
 | subscriptionId | string | Subscription ID where the workspace is located |
 | workspaceResourceGroup | string | Resource group name where the workspace is located |
