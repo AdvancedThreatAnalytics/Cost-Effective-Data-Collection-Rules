@@ -8,8 +8,17 @@
         "location": {
             "value": "eastus"
         },
-        "workspaceResourceId": {
+        "subscriptionId": {
             "value": ""
+        },
+        "workspaceResourceGroup": {
+            "value": ""
+        },
+        "workspaceName": {
+            "value": ""
+        },
+        "facilityName": {
+            "value": "local0"
         }
     }
 }

@@ -16,16 +16,44 @@
             },
             "defaultValue": "eastus"
         },
-        "workspaceResourceId": {
+        "subscriptionId": {
             "type": "string",
             "metadata": {
-                "description": "Full Resource ID of the Log Analytics workspace. Should start with /subscriptions/..."
+                "description": "Subscription ID where the workspace is located"
+            }
+        },
+        "workspaceResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "Resource group name where the workspace is located"
+            }
+        },
+        "workspaceName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Log Analytics workspace"
+            }
+        },
+        "facilityName": {
+            "type": "string",
+            "metadata": {
+                "description": "Syslog facility name to collect"
             },
-            "minLength": 1,
-            "defaultValue": "",
-            "validationPattern": "^/subscriptions/[^/]*/resourceGroups/[^/]*/providers/Microsoft.OperationalInsights/workspaces/[^/]*$",
-            "validationMessage": "Please provide a valid Log Analytics workspace resource ID. The value should look like: /subscriptions/<subscription-id>/resourceGroups/<resource-group>/providers/Microsoft.OperationalInsights/workspaces/<workspace-name>"
+            "allowedValues": [
+                "local0",
+                "local1",
+                "local2",
+                "local3",
+                "local4",
+                "local5",
+                "local6",
+                "local7"
+            ],
+            "defaultValue": "local0"
         }
+    },
+    "variables": {
+        "workspaceResourceId": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', parameters('workspaceResourceGroup'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
     },
     "resources": [
         {
@@ -42,7 +70,7 @@
                     "syslog": [
                         {
                             "streams": ["Microsoft-CommonSecurityLog"],
-                            "facilityNames": ["local0"],
+                            "facilityNames": ["[parameters('facilityName')]"],
                             "logLevels": [
                                 "Info",
                                 "Notice",
@@ -65,7 +93,7 @@
                 "destinations": {
                     "logAnalytics": [
                         {
-                            "workspaceResourceId": "[parameters('workspaceResourceId')]",
+                            "workspaceResourceId": "[variables('workspaceResourceId')]",
                             "name": "DataCollectionEvent"
                         }
                     ]
