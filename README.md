@@ -10,7 +10,6 @@ This template deploys a Data Collection Rule for Fortigate standard logs in Azur
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| dcrName | string | Name of the Data Collection Rule |
 | location | string | Location for the Data Collection Rule |
 | subscriptionId | string | Subscription ID where the workspace is located |
 | workspaceResourceGroup | string | Resource group name where the workspace is located |
@@ -19,6 +18,7 @@ This template deploys a Data Collection Rule for Fortigate standard logs in Azur
 
 ## Notes
 
+- The DCR name is automatically generated as 'CS-Fortigate-Standard-DCR-{current-date}'
 - Make sure to specify a valid Log Analytics workspace Resource ID during deployment
 - The workspace details can be found in your Log Analytics workspace's Properties page
 - The DCR is configured for Linux systems

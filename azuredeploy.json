@@ -2,13 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "dcrName": {
-            "type": "string",
-            "metadata": {
-                "description": "Name of the Data Collection Rule"
-            },
-            "defaultValue": "CS-Fortigate-Standard-DCR"
-        },
         "location": {
             "type": "string",
             "metadata": {
@@ -53,13 +46,15 @@
         }
     },
     "variables": {
-        "workspaceResourceId": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', parameters('workspaceResourceGroup'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
+        "workspaceResourceId": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', parameters('workspaceResourceGroup'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]",
+        "currentDate": "[utcNow('yyyy-MM-dd')]",
+        "dcrName": "[concat('CS-Fortigate-Standard-DCR-', variables('currentDate'))]"
     },
     "resources": [
         {
             "type": "Microsoft.Insights/dataCollectionRules",
             "apiVersion": "2022-06-01",
-            "name": "[parameters('dcrName')]",
+            "name": "[variables('dcrName')]",
             "location": "[parameters('location')]",
             "kind": "Linux",
             "tags": {
