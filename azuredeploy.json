@@ -2,13 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "location": {
-            "type": "string",
-            "metadata": {
-                "description": "Location for the Data Collection Rule"
-            },
-            "defaultValue": "eastus"
-        },
         "workspaceName": {
             "type": "string",
             "metadata": {
@@ -37,13 +30,15 @@
             "type": "string",
             "defaultValue": "[utcNow('u')]",
             "metadata": {
-                "description": "Base time for the deployment"
+                "description": "Base time for the deployment",
+                "hidden": true
             }
         }
     },
     "variables": {
         "subscriptionId": "[subscription().subscriptionId]",
         "resourceGroupName": "[resourceGroup().name]",
+        "location": "[resourceGroup().location]",
         "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]",
         "formattedDate": "[substring(parameters('baseTime'), 0, 10)]",
         "dcrName": "[concat('CS-Fortigate-Standard-DCR-', variables('formattedDate'))]"
@@ -53,7 +48,7 @@
             "type": "Microsoft.Insights/dataCollectionRules",
             "apiVersion": "2022-06-01",
             "name": "[variables('dcrName')]",
-            "location": "[parameters('location')]",
+            "location": "[variables('location')]",
             "kind": "Linux",
             "tags": {
                 "createdBy": "Sentinel"
