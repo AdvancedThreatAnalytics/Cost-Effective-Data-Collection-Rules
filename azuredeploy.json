@@ -9,23 +9,12 @@
             },
             "defaultValue": "eastus"
         },
-        "subscriptionId": {
-            "type": "string",
-            "metadata": {
-                "description": "Subscription ID where the workspace is located"
-            }
-        },
-        "workspaceResourceGroup": {
-            "type": "string",
-            "metadata": {
-                "description": "Resource group name where the workspace is located"
-            }
-        },
         "workspaceName": {
             "type": "string",
             "metadata": {
                 "description": "Name of the Log Analytics workspace"
-            }
+            },
+            "defaultValue": "[first(map(reference(resourceId('Microsoft.Resources/resourceGroups', resourceGroup().name), '2021-04-01').resources, (resource) => resource.name))]"
         },
         "facilityName": {
             "type": "string",
@@ -53,7 +42,9 @@
         }
     },
     "variables": {
-        "workspaceResourceId": "[tolower(concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', parameters('workspaceResourceGroup'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')))]",
+        "subscriptionId": "[subscription().subscriptionId]",
+        "resourceGroupName": "[resourceGroup().name]",
+        "workspaceResourceId": "[tolower(concat('/subscriptions/', variables('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')))]",
         "formattedDate": "[substring(parameters('baseTime'), 0, 10)]",
         "dcrName": "[concat('CS-Fortigate-Standard-DCR-', variables('formattedDate'))]"
     },

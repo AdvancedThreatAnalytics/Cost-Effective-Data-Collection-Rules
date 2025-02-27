@@ -5,12 +5,6 @@
         "location": {
             "value": "eastus"
         },
-        "subscriptionId": {
-            "value": ""
-        },
-        "workspaceResourceGroup": {
-            "value": ""
-        },
         "workspaceName": {
             "value": ""
         },
