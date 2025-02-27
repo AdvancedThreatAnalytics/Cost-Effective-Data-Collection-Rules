@@ -1,0 +1,86 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "dcrName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Data Collection Rule"
+            },
+            "defaultValue": "CS-Fortigate-Standard-DCR"
+        },
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "Location for the Data Collection Rule"
+            },
+            "defaultValue": "eastus"
+        },
+        "workspaceResourceId": {
+            "type": "string",
+            "metadata": {
+                "description": "Resource ID of the Log Analytics workspace"
+            }
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Insights/dataCollectionRules",
+            "apiVersion": "2022-06-01",
+            "name": "[parameters('dcrName')]",
+            "location": "[parameters('location')]",
+            "kind": "Linux",
+            "tags": {
+                "createdBy": "Sentinel"
+            },
+            "properties": {
+                "dataSources": {
+                    "syslog": [
+                        {
+                            "streams": ["Microsoft-CommonSecurityLog"],
+                            "facilityNames": ["local0"],
+                            "logLevels": [
+                                "Info",
+                                "Notice",
+                                "Warning",
+                                "Error",
+                                "Critical",
+                                "Alert",
+                                "Emergency"
+                            ],
+                            "name": "sysLogsDataSource-1039681472"
+                        },
+                        {
+                            "streams": ["Microsoft-CommonSecurityLog"],
+                            "facilityNames": ["nopri"],
+                            "logLevels": ["Emergency"],
+                            "name": "sysLogsDataSource-1697966155"
+                        }
+                    ]
+                },
+                "destinations": {
+                    "logAnalytics": [
+                        {
+                            "workspaceResourceId": "[parameters('workspaceResourceId')]",
+                            "name": "DataCollectionEvent"
+                        }
+                    ]
+                },
+                "dataFlows": [
+                    {
+                        "streams": ["Microsoft-CommonSecurityLog"],
+                        "destinations": ["DataCollectionEvent"],
+                        "transformKql": "source | where Activity startswith 'traffic'",
+                        "outputStream": "Custom-Fortinet_CL"
+                    },
+                    {
+                        "streams": ["Microsoft-CommonSecurityLog"],
+                        "destinations": ["DataCollectionEvent"],
+                        "transformKql": "source | where Activity !startswith 'traffic'",
+                        "outputStream": "Microsoft-CommonSecurityLog"
+                    }
+                ]
+            }
+        }
+    ]
+}
