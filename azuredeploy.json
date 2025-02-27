@@ -12,9 +12,9 @@
         "workspaceName": {
             "type": "string",
             "metadata": {
-                "description": "Name of the Log Analytics workspace"
-            },
-            "defaultValue": "[first(map(reference(resourceId('Microsoft.Resources/resourceGroups', resourceGroup().name), '2021-04-01').resources, (resource) => resource.name))]"
+                "description": "Name of the Log Analytics workspace",
+                "strongType": "Microsoft.OperationalInsights/workspaces"
+            }
         },
         "facilityName": {
             "type": "string",
@@ -44,7 +44,7 @@
     "variables": {
         "subscriptionId": "[subscription().subscriptionId]",
         "resourceGroupName": "[resourceGroup().name]",
-        "workspaceResourceId": "[tolower(concat('/subscriptions/', variables('subscriptionId'), '/resourceGroups/', variables('resourceGroupName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')))]",
+        "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]",
         "formattedDate": "[substring(parameters('baseTime'), 0, 10)]",
         "dcrName": "[concat('CS-Fortigate-Standard-DCR-', variables('formattedDate'))]"
     },
