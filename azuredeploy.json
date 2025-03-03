@@ -30,7 +30,7 @@
             "type": "string",
             "defaultValue": "[utcNow('u')]",
             "metadata": {
-                "description": "Base time for the deployment",
+                "description": "Base time for the deployment (Do Not Change)",
                 "hidden": true
             }
         }
@@ -51,7 +51,7 @@
             "location": "[variables('location')]",
             "kind": "Linux",
             "tags": {
-                "createdBy": "Sentinel"
+                "createdBy": "Critical Start Repository"
             },
             "properties": {
                 "dataSources": {
@@ -68,13 +68,13 @@
                                 "Alert",
                                 "Emergency"
                             ],
-                            "name": "sysLogsDataSource-1039681472"
+                            "name": "fortigate-facility-logs"
                         },
                         {
                             "streams": ["Microsoft-CommonSecurityLog"],
                             "facilityNames": ["nopri"],
                             "logLevels": ["Emergency"],
-                            "name": "sysLogsDataSource-1697966155"
+                            "name": "fortigate-nopri-logs"
                         }
                     ]
                 },
