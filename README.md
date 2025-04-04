@@ -21,7 +21,7 @@ If the button above doesn't work, you can deploy manually:
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| workspaceName | string | Name of the Log Analytics workspace (auto-populated from selected resource group) |
+| workspaceName | string | Name of the Log Analytics workspace (required for both DCRs) |
 | facilityName | string | Syslog facility name (local0-local7) - Only for Fortigate DCR |
 
 ## Notes
@@ -33,7 +33,7 @@ If the button above doesn't work, you can deploy manually:
      - Configured for Linux systems with facility and NOPRI emergency logs
      - Implements traffic/non-traffic log transformations
   2. Workspace Transform DCR:
-     - Name format: 'CS-Workspace-Transform-DCR-{current-date}'
-     - Implements workspace query log transformations
-     - Filters and transforms LAQueryLogs
+     - Name: 'CS-WorkspaceTransformation-Standard-DCR'
+     - Transforms AAD Non-Interactive User Sign-In Logs
+     - Removes specified fields and adds conditional access policy flags
 - Created by Critical Start Repository
