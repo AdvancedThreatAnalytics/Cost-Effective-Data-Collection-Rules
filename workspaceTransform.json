@@ -38,10 +38,18 @@
             "apiVersion": "2021-09-01-preview",
             "kind": "WorkspaceTransforms",
             "properties": {
+                "destinations": {
+                    "logAnalytics": [
+                        {
+                            "workspaceResourceId": "[variables('workspaceResourceId')]",
+                            "name": "destination-workspace"
+                        }
+                    ]
+                },
                 "dataFlows": [
                     {
                         "streams": ["Microsoft-Table-AADNonInteractiveUserSignInLogs"],
-                        "destinations": ["[parameters('workspaceId')]"],
+                        "destinations": ["destination-workspace"],
                         "transformKql": "source\n| extend ConditionalAccessPolicies = iif(ConditionalAccessPolicies has_cs \"failure\", ConditionalAccessPolicies, \"[]\")\n| extend ConditionalPoliciesRemoved_CF = iif(ConditionalAccessPolicies has_cs \"failure\", false, true)\n| project-away\n    TenantId,\n    SourceSystem,\n    OperationName,\n    OperationVersion,\n    Category,\n    DurationMs,\n    ResourceGroup,\n    Identity,\n    Level,\n    Location,\n    AlternateSignInName,\n    AuthenticationContextClassReferences,\n    AuthenticationMethodsUsed,\n    AuthenticationProcessingDetails,\n    AuthenticationRequirementPolicies,\n    HomeTenantName,\n    IsInteractive,\n    IsTenantRestricted,\n    IsThroughGlobalSecureAccess,\n    CreatedDateTime,\n    FederatedCredentialId,\n    GlobalSecureAccessIpAddress,\n    IsRisky,\n    ProcessingTimeInMs,\n    MfaDetail,\n    OriginalRequestId,\n    SessionLifetimePolicies,\n    SignInIdentifierType,\n    TokenIssuerName"
                     }
                 ]

@@ -22,7 +22,6 @@ If the button above doesn't work, you can deploy manually:
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | workspaceName | string | Name of the Log Analytics workspace (auto-populated from selected resource group) |
-| workspaceId | string | ID of the Log Analytics workspace (found in workspace settings under 'Workspace ID') - Only for Workspace Transform DCR |
 | facilityName | string | Syslog facility name (local0-local7) - Only for Fortigate DCR |
 
 ## Notes
