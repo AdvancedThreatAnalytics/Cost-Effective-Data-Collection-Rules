@@ -2,58 +2,62 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "workspaceName": {
+        "dataCollectionRuleName": {
             "type": "string",
+            "defaultValue": "[concat('CS-Workspace-Transform-DCR-', utcNow('yyyy-MM-dd'))]",
             "metadata": {
-                "description": "Name of the Log Analytics workspace",
-                "strongType": "Microsoft.OperationalInsights/workspaces"
+                "description": "Specifies the name of the Data Collection Rule to create."
             }
         },
-        "baseTime": {
+        "location": {
             "type": "string",
-            "defaultValue": "[utcNow('u')]",
+            "defaultValue": "westus2",
+            "allowedValues": [
+                "westus2",
+                "eastus2",
+                "eastus2euap"
+            ],
             "metadata": {
-                "description": "Base time for the deployment (Do Not Change)",
-                "hidden": true
+                "description": "Specifies the location in which to create the Data Collection Rule."
             }
         },
-        "workspaceId": {
+        "workspaceResourceId": {
             "type": "string",
             "metadata": {
-                "description": "ID of the Log Analytics workspace (can be found in workspace settings under 'Workspace ID')"
+                "description": "Specifies the Azure resource ID of the Log Analytics workspace to use."
             }
         }
-    },
-    "variables": {
-        "location": "[resourceGroup().location]",
-        "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]",
-        "formattedDate": "[substring(parameters('baseTime'), 0, 10)]",
-        "dcrName": "[concat('CS-Workspace-Transform-DCR-', variables('formattedDate'))]"
     },
     "resources": [
         {
             "type": "Microsoft.Insights/dataCollectionRules",
-            "name": "[variables('dcrName')]",
-            "location": "[variables('location')]",
+            "name": "[parameters('dataCollectionRuleName')]",
+            "location": "[parameters('location')]",
             "apiVersion": "2021-09-01-preview",
             "kind": "WorkspaceTransforms",
             "properties": {
                 "destinations": {
                     "logAnalytics": [
                         {
-                            "workspaceResourceId": "[variables('workspaceResourceId')]",
-                            "name": "destination-workspace"
+                            "workspaceResourceId": "[parameters('workspaceResourceId')]",
+                            "name": "clv2ws1"
                         }
                     ]
                 },
                 "dataFlows": [
                     {
                         "streams": ["Microsoft-Table-AADNonInteractiveUserSignInLogs"],
-                        "destinations": ["destination-workspace"],
+                        "destinations": ["clv2ws1"],
                         "transformKql": "source\n| extend ConditionalAccessPolicies = iif(ConditionalAccessPolicies has_cs \"failure\", ConditionalAccessPolicies, \"[]\")\n| extend ConditionalPoliciesRemoved_CF = iif(ConditionalAccessPolicies has_cs \"failure\", false, true)\n| project-away\n    TenantId,\n    SourceSystem,\n    OperationName,\n    OperationVersion,\n    Category,\n    DurationMs,\n    ResourceGroup,\n    Identity,\n    Level,\n    Location,\n    AlternateSignInName,\n    AuthenticationContextClassReferences,\n    AuthenticationMethodsUsed,\n    AuthenticationProcessingDetails,\n    AuthenticationRequirementPolicies,\n    HomeTenantName,\n    IsInteractive,\n    IsTenantRestricted,\n    IsThroughGlobalSecureAccess,\n    CreatedDateTime,\n    FederatedCredentialId,\n    GlobalSecureAccessIpAddress,\n    IsRisky,\n    ProcessingTimeInMs,\n    MfaDetail,\n    OriginalRequestId,\n    SessionLifetimePolicies,\n    SignInIdentifierType,\n    TokenIssuerName"
                     }
                 ]
             }
         }
-    ]
+    ],
+    "outputs": {
+        "dataCollectionRuleId": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Insights/dataCollectionRules', parameters('dataCollectionRuleName'))]"
+        }
+    }
 }
