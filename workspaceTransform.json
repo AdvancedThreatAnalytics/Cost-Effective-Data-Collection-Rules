@@ -38,14 +38,6 @@
             "apiVersion": "2021-09-01-preview",
             "kind": "WorkspaceTransforms",
             "properties": {
-                "destinations": {
-                    "logAnalytics": [
-                        {
-                            "workspaceResourceId": "[variables('workspaceResourceId')]",
-                            "name": "[parameters('workspaceId')]"
-                        }
-                    ]
-                },
                 "dataFlows": [
                     {
                         "streams": ["Microsoft-Table-AADNonInteractiveUserSignInLogs"],

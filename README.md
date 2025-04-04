@@ -1,4 +1,4 @@
-# Cost Effective Data Collection Rule
+# Cost Effective Data Collection Rules
 
 This template deploys Data Collection Rules for Fortigate logs and workspace transformations in Azure Monitor.
 
