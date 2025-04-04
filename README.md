@@ -8,7 +8,9 @@ This template deploys Data Collection Rules for Fortigate logs and workspace tra
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FJohnnyMonteleoneCS%2FCost-Effective-Data-Collection-Rules%2Fmain%2Fazuredeploy.json)
 
 ### Workspace Transform DCR
-To deploy the Workspace Transform DCR:
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FJohnnyMonteleoneCS%2FCost-Effective-Data-Collection-Rules%2Fmain%2FworkspaceTransform.json)
+
+If the button above doesn't work, you can deploy manually:
 1. Navigate to Azure Portal > Create a Resource
 2. Search for "Template Deployment (Deploy custom template)"
 3. Click "Build your own template in the editor"
