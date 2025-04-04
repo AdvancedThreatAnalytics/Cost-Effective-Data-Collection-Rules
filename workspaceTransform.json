@@ -1,0 +1,53 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspaceName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Log Analytics workspace",
+                "strongType": "Microsoft.OperationalInsights/workspaces"
+            }
+        },
+        "baseTime": {
+            "type": "string",
+            "defaultValue": "[utcNow('u')]",
+            "metadata": {
+                "description": "Base time for the deployment (Do Not Change)",
+                "hidden": true
+            }
+        }
+    },
+    "variables": {
+        "location": "[resourceGroup().location]",
+        "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]",
+        "formattedDate": "[substring(parameters('baseTime'), 0, 10)]",
+        "dcrName": "[concat('CS-Workspace-Transform-DCR-', variables('formattedDate'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Insights/dataCollectionRules",
+            "name": "[variables('dcrName')]",
+            "location": "[variables('location')]",
+            "apiVersion": "2021-09-01-preview",
+            "kind": "WorkspaceTransforms",
+            "properties": {
+                "destinations": {
+                    "logAnalytics": [
+                        {
+                            "workspaceResourceId": "[variables('workspaceResourceId')]",
+                            "name": "clv2ws1"
+                        }
+                    ]
+                },
+                "dataFlows": [
+                    {
+                        "streams": ["Microsoft-Table-LAQueryLogs"],
+                        "destinations": ["clv2ws1"],
+                        "transformKql": "source |where QueryText !contains 'LAQueryLogs' | extend Context = parse_json(RequestContext) | extend Resources_CF = tostring(Context['workspaces']) |extend RequestContext = ''"
+                    }
+                ]
+            }
+        }
+    ]
+}
