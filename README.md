@@ -5,16 +5,16 @@ This template deploys Data Collection Rules for Fortigate logs and workspace tra
 ## Deploy to Azure
 
 ### Fortigate Standard DCR
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FJohnnyMonteleoneCS%2FCost-Effective-Data-Collection-Rules%2Fmain%2Fazuredeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAdvancedThreatAnalytics%2FCost-Effective-Data-Collection-Rules%2Frefs%2Fheads%2Fmain%2Fazuredeploy.json)
 
 ### Workspace Transform DCR
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FJohnnyMonteleoneCS%2FCost-Effective-Data-Collection-Rules%2Fmain%2FworkspaceTransform.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAdvancedThreatAnalytics%2FCost-Effective-Data-Collection-Rules%2Frefs%2Fheads%2Fmain%2FworkspaceTransform.json)
 
 If the button above doesn't work, you can deploy manually:
 1. Navigate to Azure Portal > Create a Resource
 2. Search for "Template Deployment (Deploy custom template)"
 3. Click "Build your own template in the editor"
-4. Copy and paste the contents of [workspaceTransform.json](./workspaceTransform.json)
+4. Copy and paste the contents of [workspaceTransform.json](https://raw.githubusercontent.com/AdvancedThreatAnalytics/Cost-Effective-Data-Collection-Rules/refs/heads/main/workspaceTransform.json)
 5. Click "Save" and proceed with the deployment
 
 ## Parameters
