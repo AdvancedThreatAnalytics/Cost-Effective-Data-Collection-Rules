@@ -16,6 +16,12 @@
                 "description": "Base time for the deployment (Do Not Change)",
                 "hidden": true
             }
+        },
+        "workspaceId": {
+            "type": "string",
+            "metadata": {
+                "description": "ID of the Log Analytics workspace (can be found in workspace settings under 'Workspace ID')"
+            }
         }
     },
     "variables": {
@@ -36,14 +42,14 @@
                     "logAnalytics": [
                         {
                             "workspaceResourceId": "[variables('workspaceResourceId')]",
-                            "name": "clv2ws1"
+                            "name": "[parameters('workspaceId')]"
                         }
                     ]
                 },
                 "dataFlows": [
                     {
                         "streams": ["Microsoft-Table-AADNonInteractiveUserSignInLogs"],
-                        "destinations": ["clv2ws1"],
+                        "destinations": ["[parameters('workspaceId')]"],
                         "transformKql": "source\n| extend ConditionalAccessPolicies = iif(ConditionalAccessPolicies has_cs \"failure\", ConditionalAccessPolicies, \"[]\")\n| extend ConditionalPoliciesRemoved_CF = iif(ConditionalAccessPolicies has_cs \"failure\", false, true)\n| project-away\n    TenantId,\n    SourceSystem,\n    OperationName,\n    OperationVersion,\n    Category,\n    DurationMs,\n    ResourceGroup,\n    Identity,\n    Level,\n    Location,\n    AlternateSignInName,\n    AuthenticationContextClassReferences,\n    AuthenticationMethodsUsed,\n    AuthenticationProcessingDetails,\n    AuthenticationRequirementPolicies,\n    HomeTenantName,\n    IsInteractive,\n    IsTenantRestricted,\n    IsThroughGlobalSecureAccess,\n    CreatedDateTime,\n    FederatedCredentialId,\n    GlobalSecureAccessIpAddress,\n    IsRisky,\n    ProcessingTimeInMs,\n    MfaDetail,\n    OriginalRequestId,\n    SessionLifetimePolicies,\n    SignInIdentifierType,\n    TokenIssuerName"
                     }
                 ]
