@@ -48,6 +48,18 @@
                     }
                 ]
             }
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[parameters('workspaceName')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "defaultDataCollectionRuleResourceId": "[resourceId('Microsoft.Insights/dataCollectionRules', variables('dcrName'))]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Insights/dataCollectionRules', variables('dcrName'))]"
+            ]
         }
     ]
 }
