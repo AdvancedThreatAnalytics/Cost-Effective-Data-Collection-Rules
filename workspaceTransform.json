@@ -22,7 +22,7 @@
         "location": "[resourceGroup().location]",
         "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]",
         "formattedDate": "[substring(parameters('baseTime'), 0, 10)]",
-        "dcrName": "[concat('CS-Workspace-Transform-DCR-', variables('formattedDate'))]"
+        "dcrName": "CS-WorkspaceTransformation-Standard-DCR"
     },
     "resources": [
         {
@@ -31,6 +31,9 @@
             "location": "[variables('location')]",
             "apiVersion": "2021-09-01-preview",
             "kind": "WorkspaceTransforms",
+            "tags": {
+                "deploymentTime": "[parameters('baseTime')]"
+            },
             "properties": {
                 "destinations": {
                     "logAnalytics": [
@@ -44,7 +47,7 @@
                     {
                         "streams": ["Microsoft-Table-AADNonInteractiveUserSignInLogs"],
                         "destinations": ["clv2ws1"],
-                        "transformKql": "source\n| extend ConditionalAccessPolicies = iif(ConditionalAccessPolicies has_cs \"failure\", ConditionalAccessPolicies, \"[]\")\n| extend ConditionalPoliciesRemoved_CF = iif(ConditionalAccessPolicies has_cs \"failure\", false, true)\n| project-away TenantId, SourceSystem, OperationName, OperationVersion, Category, DurationMs, ResourceGroup, Identity, Level, Location, AlternateSignInName, AuthenticationContextClassReferences, AuthenticationMethodsUsed, AuthenticationProcessingDetails, AuthenticationRequirementPolicies, HomeTenantName, IsInteractive, IsTenantRestricted, IsThroughGlobalSecureAccess, CreatedDateTime, FederatedCredentialId, GlobalSecureAccessIpAddress, IsRisky, ProcessingTimeInMs, MfaDetail, OriginalRequestId, SessionLifetimePolicies, SignInIdentifierType, TokenIssuerName"
+                        "transformKql": "source\n| extend ConditionalAccessPolicies = iif(ConditionalAccessPolicies has_cs \"failure\", ConditionalAccessPolicies, \"[]\")\n| extend ConditionalPoliciesRemoved_CF = iif(ConditionalAccessPolicies has_cs \"failure\", false, true)\n| project-away TenantId, SourceSystem, OperationName, OperationVersion, Category, DurationMs, ResourceGroup, Identity, Level, Location, AlternateSignInName, AuthenticationContextClassReferences, AuthenticationProcessingDetails, AuthenticationRequirementPolicies, HomeTenantName, IsInteractive, IsTenantRestricted, IsThroughGlobalSecureAccess, CreatedDateTime, FederatedCredentialId, GlobalSecureAccessIpAddress, ProcessingTimeInMs, OriginalRequestId, SessionLifetimePolicies, SignInIdentifierType, TokenIssuerName"
                     }
                 ]
             }
