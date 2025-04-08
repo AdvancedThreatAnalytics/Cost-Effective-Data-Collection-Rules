@@ -33,7 +33,8 @@ If the button above doesn't work, you can deploy manually:
      - Configured for Linux systems with facility and NOPRI emergency logs
      - Implements traffic/non-traffic log transformations
   2. Workspace Transform DCR:
-     - Name format: 'CS-Workspace-Transform-DCR-{current-date}'
+     - Fixed name: 'CS-WorkspaceTransformation-Standard-DCR'
+     - Tagged with deployment timestamp for tracking
      - Transforms AAD Non-Interactive User Sign-In Logs
      - Removes specified fields and adds conditional access policy flags
      - Automatically associates with the target workspace as the default transformation rule

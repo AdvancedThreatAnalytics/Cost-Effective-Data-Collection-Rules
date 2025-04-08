@@ -32,7 +32,8 @@
             "apiVersion": "2021-09-01-preview",
             "kind": "WorkspaceTransforms",
             "tags": {
-                "deploymentTime": "[parameters('baseTime')]"
+                "deploymentTime": "[parameters('baseTime')]",
+                "createdBy": "Critical Start Repository"
             },
             "properties": {
                 "destinations": {
