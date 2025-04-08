@@ -25,14 +25,6 @@
                 "local7"
             ],
             "defaultValue": "local0"
-        },
-        "baseTime": {
-            "type": "string",
-            "defaultValue": "[utcNow('u')]",
-            "metadata": {
-                "description": "Base time for the deployment (Do Not Change)",
-                "hidden": true
-            }
         }
     },
     "variables": {
@@ -40,8 +32,7 @@
         "resourceGroupName": "[resourceGroup().name]",
         "location": "[resourceGroup().location]",
         "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]",
-        "formattedDate": "[substring(parameters('baseTime'), 0, 10)]",
-        "dcrName": "[concat('CS-Fortigate-Standard-DCR-', variables('formattedDate'))]"
+        "dcrName": "[concat('CS-Fortigate-Standard-DCR-', substring(utcNow('u'), 0, 10))]"
     },
     "resources": [
         {
@@ -51,7 +42,8 @@
             "location": "[variables('location')]",
             "kind": "Linux",
             "tags": {
-                "createdBy": "Critical Start Repository"
+                "createdBy": "Critical Start Repository",
+                "deploymentTime": "[utcNow('u')]"
             },
             "properties": {
                 "dataSources": {

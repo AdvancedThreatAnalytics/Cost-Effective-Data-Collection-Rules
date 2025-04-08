@@ -35,7 +35,7 @@ If the button above doesn't work, you can deploy manually:
   2. Workspace Transform DCR:
      - Fixed name: 'CS-WorkspaceTransformation-Standard-DCR'
      - Tagged with deployment timestamp for tracking
-     - Transforms AAD Non-Interactive User Sign-In Logs
+     - Transforms both AAD Non-Interactive User Sign-In Logs and Sign-In Logs
      - Removes specified fields and adds conditional access policy flags
      - Automatically associates with the target workspace as the default transformation rule
 - Created by Critical Start Repository
