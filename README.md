@@ -42,7 +42,7 @@ If the button above doesn't work, you can deploy manually:
 
 ## Workspace Transform Details
 
-The following fields are removed from AAD Sign-in logs to optimize storage:
+The following fields are removed from the AADNonInteractiveUserSignInLogs and the SigninLogs tables to optimize costs:
 
 | Field | Type | Description |
 |-------|------|-------------|
