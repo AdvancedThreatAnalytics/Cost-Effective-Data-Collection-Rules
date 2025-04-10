@@ -39,3 +39,38 @@ If the button above doesn't work, you can deploy manually:
      - Removes specified fields and adds conditional access policy flags
      - Automatically associates with the target workspace as the default transformation rule
 - Created by Critical Start Repository
+
+## Workspace Transform Details
+
+The following fields are removed from AAD Sign-in logs to optimize storage:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| SourceSystem | string | The type of agent the event was collected by |
+| OperationName | string | For sign-ins, this value is always Sign-in activity |
+| OperationVersion | string | The REST API version that's requested by the client |
+| Category | string | Category of the sign-in event |
+| DurationMs | long | The duration of the operation in milliseconds |
+| ResourceGroup | string | Resource group for the logs |
+| Identity | string | The identity from the token that was presented when you made the request |
+| Level | string | The severity level of the event |
+| Location | string | The region of the resource emitting the event |
+| AlternateSignInName | string | Provides the on-premises UPN of the user signing into Azure AD |
+| AuthenticationContextClassReferences | string | The authentication contexts of the sign-in |
+| AuthenticationProcessingDetails | string | Provides the details associated with authentication processor |
+| AuthenticationRequirementPolicies | string | Set of CA policies that apply to this sign-in |
+| HomeTenantName | string | The tenant name of the external tenant who homes the entity |
+| IsInteractive | bool | Indicates if a sign-in is interactive or not |
+| IsTenantRestricted | bool | Indicates if a sign-in is under a tenant restrictions policy |
+| IsThroughGlobalSecureAccess | bool | Displays whether or not a user came through Global Secure Access service |
+| CreatedDateTime | datetime | Datetime of the sign-in activity |
+| FederatedCredentialId | string | Federated Credential Id |
+| GlobalSecureAccessIpAddress | string | Global secure IP address that user signed in from |
+| ProcessingTimeInMs | string | Request processing time in milliseconds in AD STS |
+| OriginalRequestId | string | The request id of the first request in the authentication sequence |
+| SessionLifetimePolicies | string | Policies and settings that applied to the sign-in |
+| SignInIdentifierType | string | The type of sign-in identifier |
+| TokenIssuerName | string | Name of the identity provider |
+| TokenProtectionStatusDetails | string | Indicates whether the sign-in token was bound to the device |
+
+These fields are removed to reduce storage costs while maintaining essential security monitoring capabilities.
